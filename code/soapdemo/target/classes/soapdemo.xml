@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8006" doc:name="HTTP Listener Configuration"/>
+    <ws:consumer-config name="Web_Service_Consumer" wsdlLocation="SOAPdemo.wsdl" service="SAPWOAPBIface" port="SAPWOAPBIfacePort" serviceAddress="http://10.70.20.41:9087/meaweb/services/SAPWOAPBIface" doc:name="Web Service Consumer"/>
+    <http:listener-config name="HTTP_Listener_Configuration1" host="0.0.0.0" port="8055" doc:name="HTTP Listener Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8555" doc:name="HTTP Request Configuration"/>
+    <flow name="soapdemoFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/soap" doc:name="HTTP"/>
+        <ws:consumer config-ref="Web_Service_Consumer" operation="processDocument" doc:name="Web Service Consumer"/>
+        <set-payload doc:name="Set Payload"/>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <http:request config-ref="HTTP_Request_Configuration" path="/systemapi" method="POST" doc:name="HTTP"/>
+    </flow>
+    <flow name="soapdemoFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration1" path="/systemapi" allowedMethods="POST" doc:name="HTTP"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

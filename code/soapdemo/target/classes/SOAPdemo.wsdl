@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mxws="http://www.mro.com/mx/wsdl" xmlns:mxint="http://www.mro.com/mx/integration" targetNamespace="http://www.mro.com/mx/wsdl" name="SAPWOAPBIface">
+
+  <types>
+
+    <xsd:schema>
+
+      <xsd:import namespace="http://www.mro.com/mx/integration" schemaLocation="C:\Users\suruchi.b\Documents\Tranche 2.1\MeteringBatchAPTRequest.xsd" /-->
+
+    </xsd:schema>
+
+  </types>
+
+  <message name="SAPWOAPBIface">
+
+    <part name="input" element="mxint:SAPWOAPBIface" />
+
+  </message>
+
+  <message name="SAPWOAPBIfaceResponse" />
+
+  <portType name="SAPWOAPBIfacePortType">
+
+    <operation name="processDocument">
+
+      <input message="mxws:SAPWOAPBIface" />
+
+      <output message="mxws:SAPWOAPBIfaceResponse" />
+
+    </operation>
+
+  </portType>
+
+  <binding name="SAPWOAPBIfaceBinding" type="mxws:SAPWOAPBIfacePortType">
+
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+    <operation name="processDocument">
+
+      <soap:operation style="document" />
+
+      <input>
+
+        <soap:body use="literal" />
+
+      </input>
+
+      <output>
+
+        <soap:body use="literal" />
+
+      </output>
+
+    </operation>
+
+  </binding>
+
+  <service name="SAPWOAPBIface">
+
+    <port name="SAPWOAPBIfacePort" binding="mxws:SAPWOAPBIfaceBinding">
+
+      <soap:address location="http://10.70.20.41:9087/meaweb/services/SAPWOAPBIface" />
+
+    </port>
+
+  </service>
+
+</definitions>
+
+
+

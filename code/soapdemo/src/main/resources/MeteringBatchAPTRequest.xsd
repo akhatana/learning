@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="AppointmentRequests">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Header">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="TransactionType" type="xsd:string"/> <!-- A00 -->
+              <xsd:element name="SenderID" type="xsd:string"/> <!-- Hard code to NGM -->
+              <xsd:element name="ReceiverID" type="xsd:string"/><!-- SCO01,STH01,NTH01,WWE01 -->
+              <xsd:element name="InterfaceName" type="xsd:string"/> <!-- AW15A-->
+              <xsd:element name="OrganisationID" type="xsd:int"/>
+              <xsd:element name="FileType" type="xsd:string"/>  <!-- AR4-->
+              <xsd:element name="CreationDate" type="xsd:date"/>
+              <xsd:element name="CreationTime" type="xsd:time"/>
+              <xsd:element name="GenrationNumber" type="xsd:integer"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Record" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="AppointmentRequest">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="TransactionType" type="xsd:string"/>
+                    <xsd:element name="OriginatorId" type="xsd:string"/>
+                    <xsd:element name="ServiceNotificationNo" type="xsd:integer"/>
+                    <xsd:element name="RequestType" type="xsd:string"/>
+                    <xsd:element name="RequestCreatedDate" type="xsd:date"/>
+                    <xsd:element name="RequestedAppointmentDate" type="xsd:date" minOccurs="0"/>
+                    <xsd:element name="RequestedAppointmentTimeSlot" type="xsd:string"/>
+                    <xsd:element name="OverCommitFlag" type="xsd:string"/>
+                    <xsd:element name="BatchIndicator" type="xsd:string"/>
+                    <xsd:element name="JobEndDate" type="xsd:date" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="CustomerAddress">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Outcode" type="xsd:string"/>
+                    <xsd:element name="Incode" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="MeterDetails">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="MeterCode" type="xsd:string"/>
+                    <xsd:element name="MeterActionCode" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+	<xsd:element name="Footer">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="TransactionType" type="xsd:string"/> <!-- Z99 -->
+	        <xsd:element name="RecordCount" type="xsd:int"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>  
+</xsd:schema>
